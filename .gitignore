@@ -11,3 +11,7 @@ src/main/webapp/META-INF
 release/
 node_modules/
 .sass-cache/
+.suo
+obj
+.class
+bin
