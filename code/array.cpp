@@ -201,17 +201,63 @@ void find_factor(int sum,int n)
     find_factor(sum,n-1);//n不放在里面
 }
 
+
+
 /*递归-八皇后问题*/
+int sum=0;
+template<typename T>
+void printVector(vector<vector<T>>&v){
+	for(int i=0;i<v.size();i++){
+		for(int j=0;j<v[i].size();j++){
+			cout<<v[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	sum++;
+}
 
+bool valid(int i,int j,vector<bool>&rowStatus,vector<bool>&obliqueStatus,vector<bool>&obliqueStatus1,int length){
+	if(rowStatus[j]||obliqueStatus[i+j]||obliqueStatus1[length-1-i+j]){
+		return false;
+	}
+	return true;
+}
 
+void printNQueue(vector<vector<char>>&board,int i,vector<bool>&rowStatus,vector<bool>&obliqueStatus,vector<bool>&obliqueStatus1){
+	if(i==board.size()){
+		printVector(board);
+		cout<<endl;
+	}
 
+	for(int j=0;j<board.size();j++){
+		if(valid(i,j,rowStatus,obliqueStatus,obliqueStatus1,board.size())){
+			board[i][j]='Q';
+			rowStatus[j]=true;
+			obliqueStatus[i+j]=true;
+			obliqueStatus1[board.size()-1-i+j]=true;
+			printNQueue(board,i+1,rowStatus,obliqueStatus,obliqueStatus1);
+			obliqueStatus[i+j]=false;
+			rowStatus[j]=false;
+			obliqueStatus1[board.size()-1-i+j]=false;
+			board[i][j]='*';
+		}
+	}
+}
 
 /*非递归-八皇后问题*/
 void printQueue(int n){
-	//vector<vector<int>> array();
-}
+    vector<vector<char>> board(n,vector<char>(n,'*'));
+    if(n<=3){
+        return;
+    }
 
+	vector<bool>rowStatus(n,false);
+	vector<bool>obliqueStatus(2*n-1,false);
+	vector<bool>obliqueStatus1(2*n-1,false);
+	printNQueue(board,0,rowStatus,obliqueStatus,obliqueStatus1);
+}
 int main(){
+#if 0
 	char str[]="aaab";
 	char *p=str;
 	permutation(str,p);
@@ -258,5 +304,9 @@ int main(){
 		}
 		cout<<endl;
 	}
+#endif
+
+	printQueue(8);
+	cout<<"sum="<<sum<<endl;
 	return 0;
 }
