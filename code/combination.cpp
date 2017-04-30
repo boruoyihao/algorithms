@@ -16,12 +16,12 @@ void permutation(char * str,char * start){
 	char temp;
 	for(char * p=start;*p!='\0';p++)	{
 		temp=*p;
-        *p=*start;
+		*p=*start;
 		*start=temp;
-        permutation(str,start+1);
-        temp=*p;
-        *p=*start;
-        *start=temp;
+		permutation(str,start+1);
+		temp=*p;
+		*p=*start;
+		*start=temp;
 	}
 }
 
@@ -60,15 +60,15 @@ char* next_permutation(char *str){
 			char*j=end;
 			while(!(*i<*(--j)));
 			swap(str,i,j);
-		    reverse(str,ii,end-1);
-		    break;	
+			reverse(str,ii,end-1);
+			break;
 		}
 
 		if(i==p){
 			//reverse(str,p,end-1);
 			//break;
 			return NULL;
-		}	
+		}
 	}
 	return str;
 }
@@ -106,22 +106,22 @@ vector<string> combination2(string str){
 				strResult+=str[j];
 			}
 		}
-		result.push_back(strResult);	
+		result.push_back(strResult);
 	}
 	return result;
 }
 
-void combination4(vector<string>&result,string str,string& one,int index,int number){
+void combination4(vector<string>&result,string str,string&one,int index,int number){
 	if(0==number){
 		result.push_back(one);
 		return;
 	}
-    if(index>=str.size()){
+	if(index>=str.size()){
 		return;
 	}
 	one.push_back(str[index]);
 	combination4(result,str,one,index+1,number-1);
-    one.pop_back();
+	one.pop_back();
 
 	combination4(result,str,one,index+1,number);
 }
@@ -134,13 +134,13 @@ vector<string> combination3(string str){
 	}
 
 	for(int i=1;i<=str.size();i++){
-	   string one="";
-	   combination4(result,str,one,0,i);
+		string one="";
+		combination4(result,str,one,0,i);
 	}
 	return result;
 }
 
-void findSumM3(int M,int N,vector<vector<int>>&result,vector<int>&v){
+void findSumM3(int M,int N,vector<vector<int> >&result,vector<int>&v){
 	if(M<=0||N<=0){
 		return;
 	}
@@ -156,49 +156,49 @@ void findSumM3(int M,int N,vector<vector<int>>&result,vector<int>&v){
 	findSumM3(M,N-1,result,v);
 }
 
-void findSumM2(int M,int N,vector<vector<int>>&result,vector<int>&v){
+void findSumM2(int M,int N,vector<vector<int> >&result,vector<int>&v){
 	if(M<0||N<0){
-        return;
-    }   
-    if(0==M){
-        result.push_back(v);
 		return;
-    }   
+	}
+	if(0==M){
+		result.push_back(v);
+		return;
+	}
 
-    v.push_back(N);
-    findSumM2(M-N,N-1,result,v);
-    v.pop_back();
-    findSumM2(M,N-1,result,v);
+	v.push_back(N);
+	findSumM2(M-N,N-1,result,v);
+	v.pop_back();
+	findSumM2(M,N-1,result,v);
 }
 
 
 /*从N个数中找出和等于M的数*/
-vector<vector<int>> findSumM(int M,int N){
-	vector<vector<int>>result;
+vector<vector<int> > findSumM(int M,int N){
+	vector<vector<int> >result;
 	vector<int>v;
 	findSumM2(M,N,result,v);
 	return result;
 }
 
-list<int> list1; 
+list<int> list1;
 void find_factor(int sum,int n)
 {
-    //递归出口
-    if(n<=0||sum<=0)
-        return;
-    //输出找到的数
-    if(sum==n)
-    {
-        list1.reverse();
-        for(list<int>::iterator iter=list1.begin();iter!=list1.end();iter++)
-            cout<<*iter<<"+";
-        cout<<n<<endl;
-        list1.reverse();
-    }
-    list1.push_front(n);
-    find_factor(sum-n,n-1);//n放在里面
-    list1.pop_front();
-    find_factor(sum,n-1);//n不放在里面
+	//递归出口
+	if(n<=0||sum<=0)
+		return;
+	//输出找到的数
+	if(sum==n)
+	{
+		list1.reverse();
+		for(list<int>::iterator iter=list1.begin();iter!=list1.end();iter++)
+			cout<<*iter<<"+";
+		cout<<n<<endl;
+		list1.reverse();
+	}
+	list1.push_front(n);
+	find_factor(sum-n,n-1);//n放在里面
+	list1.pop_front();
+	find_factor(sum,n-1);//n不放在里面
 }
 
 
@@ -206,7 +206,7 @@ void find_factor(int sum,int n)
 /*递归-八皇后问题*/
 int sum=0;
 template<typename T>
-void printVector(vector<vector<T>>&v){
+void printVector(vector<vector<T> >&v){
 	for(int i=0;i<v.size();i++){
 		for(int j=0;j<v[i].size();j++){
 			cout<<v[i][j]<<" ";
@@ -223,7 +223,7 @@ bool valid(int i,int j,vector<bool>&rowStatus,vector<bool>&obliqueStatus,vector<
 	return true;
 }
 
-void printNQueue(vector<vector<char>>&board,int i,vector<bool>&rowStatus,vector<bool>&obliqueStatus,vector<bool>&obliqueStatus1){
+void printNQueue(vector<vector<char> >&board,int i,vector<bool>&rowStatus,vector<bool>&obliqueStatus,vector<bool>&obliqueStatus1){
 	if(i==board.size()){
 		printVector(board);
 		cout<<endl;
@@ -246,10 +246,10 @@ void printNQueue(vector<vector<char>>&board,int i,vector<bool>&rowStatus,vector<
 
 /*非递归-八皇后问题*/
 void printQueue(int n){
-    vector<vector<char>> board(n,vector<char>(n,'*'));
-    if(n<=3){
-        return;
-    }
+	vector<vector<char> > board(n,vector<char>(n,'*'));
+	if(n<=3){
+		return;
+	}
 
 	vector<bool>rowStatus(n,false);
 	vector<bool>obliqueStatus(2*n-1,false);
@@ -297,7 +297,7 @@ int main(){
 
 	find_factor(10,5);
 
-    vector<vector<int>> tmp(3,vector<int>(3,-1));
+	vector<vector<int>> tmp(3,vector<int>(3,-1));
 	for(int i=0;i<tmp.size();i++){
 		for(int j=0;j<tmp[i].size();j++){
 			cout<<tmp[i][j]<<" ";
@@ -306,7 +306,7 @@ int main(){
 	}
 #endif
 
-	printQueue(8);
+	printQueue(13);
 	cout<<"sum="<<sum<<endl;
 	return 0;
 }

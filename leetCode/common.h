@@ -1,0 +1,28 @@
+#include<iostream>
+#include<list>
+#include<map>
+#include<string>
+#include<algorithm>
+#include<set>
+#include<stack>
+#include<queue>
+using namespace std;
+
+template<typename T>
+void printVector(vector<vector<T> >&v){
+    for(int i=0;i<v.size();i++){
+        for(int j=0;j<v[i].size();j++){
+            cout<<v[i][j]<<" ";
+        }
+        cout<<endl;
+    }   
+}
+
+
+template<typename T>
+void printVector1(vector<T>&v){
+	for(int i=0;i<v.size();i++){
+		cout<<v[i]<<" ";
+	}
+	cout<<endl;
+}
