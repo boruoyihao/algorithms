@@ -88,9 +88,6 @@ public:
 			v.push_back(candidates[i]);
 			combinationSum2(result,v,candidates,i+1,target-candidates[i]);
 			v.pop_back();
-			while(i+1<candidates.size()&&candidates[i]==candidates[i+1]){
-				i++;
-			}
 		}
 	}
 };
