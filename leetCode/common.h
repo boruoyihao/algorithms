@@ -26,3 +26,14 @@ void printVector1(vector<T>&v){
 	}
 	cout<<endl;
 }
+
+
+template<typename T>
+void cinVector(vector<vector<T>>&v){
+
+	for(int i=0;i<v.size();i++){
+		for(int j=0;j<v[i].size();j++){
+			cin>>v[i][j];
+		}
+	}
+}
