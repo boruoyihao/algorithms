@@ -6,6 +6,7 @@
 #include<set>
 #include<stack>
 #include<queue>
+#include<limits.h>
 using namespace std;
 
 template<typename T>
