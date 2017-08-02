@@ -43,14 +43,18 @@ public:
         if(stones.size()<2){
            return false;
         }
-        return dfs(stones,0,1);      
+        map<int,int>m;
+        return dfs(stones,0,1,m);      
     }
 
-    bool dfs(const vector<int>&stones,int index,int step){
+    bool dfs(const vector<int>&stones,int index,int step,map<int,int>&m){
         if(step<1){
             return false;
         }
 
+        if(m.find(index)!=m.end()&&m[index]==step){
+             return false;
+        }
         if(stones[index]+step==stones[stones.size()-1]){
            return true;
         }
@@ -58,22 +62,31 @@ public:
         //cout<<"index="<<index<<"step="<<step<<endl;
         for(int i=index+1;i<stones.size();i++){
             if(stones[index]+step==stones[i]) {            
-                 return dfs(stones,i,step-1)||dfs(stones,i,step)||dfs(stones,i,step+1);
+                 return dfs(stones,i,step-1,m)||dfs(stones,i,step,m)||dfs(stones,i,step+1,m);
             }else if(stones[index]+step>stones[i]&&(i-1)>0&&stones[index]+step<stones[i-1]){
-               return false;
+                m[index]=step;
+                return false;
             }
 	}
+       m[index]=step;
        return false;
     }
 };
 
 #endif
 
-
+#if 0
+class Solution {
+public:
+    bool canCross(vector<int>& stones) {
+        
+    }
+};
+#endif
 
 int main(){
-   //int array[]={0,1,3,5,6,8,12,17};
-   int array[]={0,1,2,3,4,8,9,11};
+   int array[]={0,1,3,5,6,8,12,17};
+   //int array[]={0,1,2,3,4,8,9,11};
    vector<int>stones(array,array+8);
    Solution *s =new Solution;
    cout<<s->canCross(stones)<<endl;
