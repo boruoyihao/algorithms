@@ -75,20 +75,62 @@ public:
 
 #endif
 
-#if 0
+#if 1
 class Solution {
 public:
     bool canCross(vector<int>& stones) {
-        
+     	if(stones.size()<=1){
+            return true;
+        }
+        map<int,int>indexMem;
+        for(int i=0;i<stones.size();i++){
+            if (i > 3 && stones[i] > stones[i - 1] * 2) {return false;} // The two stones are too far away. 
+            indexMem[stones[i]]=i;
+        }
+
+        map<int,set<int> > mem;
+        set<int>v;
+        v.insert(1);
+        mem[0]=v;
+        int step[]={-1,0,1};
+        for(int i=0;i<stones.size();i++){
+            for(set<int>::iterator it=mem[i].begin();it!=mem[i].end();it++){
+                for(int k=0;k<3;k++){
+                     int jump=(*it)+step[k];
+                     int expected=stones[i]+jump;
+                     //cout<<"expected:"<<expected<<",jump:"<<jump<<endl;
+                     if(jump<stones.size()&&expected==stones[stones.size()-1]){
+                        return true;        
+                     }else if(jump>0){
+                       if(indexMem.find(expected)!=indexMem.end()){
+                           int index=indexMem[expected];
+                           if(mem.find(index)==mem.end()){
+                                set<int> vv;
+                                vv.insert(jump);
+                                mem[index]=vv;
+                            }else{
+                                mem[index].insert(jump);
+                         }
+                       } 
+                  }
+               }
+            }
+        }
+      return false;   
     }
 };
 #endif
 
 int main(){
-   int array[]={0,1,3,5,6,8,12,17};
+   int array[]={0,1};
+   //int array[]={0,1,3,5,6,8,12,17};
    //int array[]={0,1,2,3,4,8,9,11};
-   vector<int>stones(array,array+8);
+   vector<int>stones(array,array+2);
    Solution *s =new Solution;
    cout<<s->canCross(stones)<<endl;
+
+
+   //unordered_map<int, unordered_set<int>> steps;
+   //cout<<steps[1].size()<<endl;  
    return 0;
 }
