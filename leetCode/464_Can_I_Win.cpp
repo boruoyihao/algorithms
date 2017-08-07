@@ -30,6 +30,7 @@ Same with other integers chosen by the first player, the second player will alwa
 
 #include "common.h"
 
+#if 0
 class Solution {
 public:
     bool canIWin(int maxChoosableInteger, int desiredTotal) {
@@ -39,6 +40,8 @@ public:
 
     bool dfs(vector<bool>&mem,int sum,int desiredTotal,bool status){
 
+
+       //cout<<"sum:"<<sum<<",status:"<<status<<endl;
        int i=mem.size()-1;
        for(;i>=1;i--){
            if(mem[i]){
@@ -66,10 +69,32 @@ public:
        return false;
     }
 };
+#endif
+
+class Solution {
+public:
+       bool canIWin(int maxChoosableInteger, int desiredTotal) {
+        if(!desiredTotal) return 1;
+        return canWin(~0<<maxChoosableInteger, maxChoosableInteger, desiredTotal);
+    }
+    bool canWin(int pool, int maxint, int tot) {
+        if(tot<=0) return 0;
+        for(int i=0;i<maxint;i++) {
+            int mask = 1<<i;
+            if(pool & mask) continue;
+            pool|=mask;
+            if(!canWin(pool,maxint, tot-i-1)) return 1;
+            pool^=mask;
+        }
+        return 0;
+    }
+};
 
 
 int main(){
    Solution s;
    cout<<s.canIWin(10,15)<<endl;
-   return 0;
+   cout<<((-1)<<10)<<endl;
+   cout<<(1<<10)<<endl;
+return 0;
 }
