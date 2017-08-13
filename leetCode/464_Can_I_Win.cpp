@@ -35,33 +35,29 @@ class Solution {
 public:
     bool canIWin(int maxChoosableInteger, int desiredTotal) {
   	 vector<bool>mem(maxChoosableInteger+1,false);
-         return dfs(mem,0,desiredTotal,true);
+         return dfs(mem,0,desiredTotal);
     }
 
-    bool dfs(vector<bool>&mem,int sum,int desiredTotal,bool status){
-
-
-       //cout<<"sum:"<<sum<<",status:"<<status<<endl;
-       int i=mem.size()-1;
+    bool dfs(vector<bool>&mem,int sum,int desiredTotal){
+       /*int i=mem.size()-1;
        for(;i>=1;i--){
            if(mem[i]){
                continue;
            }
-           if(status&&i+sum>=desiredTotal){
+           if(i+sum>=desiredTotal){
                return true;
            }
-           if(!status&&i+sum>=desiredTotal){
-               return false;
-           }
            break;
+       }*/
+       if(sum>=desiredTotal){
+            return 1;
        }
-
-       for(int j=1;j<=i;j++){
+       for(int j=1;j<mem.size();j++){
            if(mem[j]){
                continue;
            }
            mem[j]=true;
-           if(dfs(mem,sum+j,desiredTotal,!status)){
+           if(dfs(mem,sum+j,desiredTotal)){
                 return true;
            }
            mem[j]=false;
@@ -71,30 +67,74 @@ public:
 };
 #endif
 
+#if 0
 class Solution {
 public:
-       bool canIWin(int maxChoosableInteger, int desiredTotal) {
-        if(!desiredTotal) return 1;
-        return canWin(~0<<maxChoosableInteger, maxChoosableInteger, desiredTotal);
+    bool canIWin(int maxChoosableInteger, int desiredTotal) {
+         if(maxChoosableInteger>=desiredTotal){
+              return true;
+         }
+
+         if((maxChoosableInteger+1)*maxChoosableInteger/2<desiredTotal){
+              return false;
+         }
+         vector<bool>mem(maxChoosableInteger+1,false);
+         return dfs(mem,maxChoosableInteger,desiredTotal,true);
     }
-    bool canWin(int pool, int maxint, int tot) {
+
+    bool dfs(vector<bool>&mem,int maxNo,int desiredTotal,bool status){
+       if(desiredTotal<=0){
+            return false;
+       }
+       for(int i=1;i<=maxNo;i++){
+           if(mem[i]){
+               continue;
+           }
+           mem[i]=true;
+           if(!dfs(mem,maxNo,desiredTotal-i,!status)&&status){
+                return true;
+           }
+           mem[i]=false;
+       }
+       return false;
+    }
+};
+
+#endif
+
+//the answer from leetcode discussion part
+class Solution {
+public:
+    bool canIWin(int maxChoosableInteger, int desiredTotal) {
+        if(!desiredTotal) return 1;
+        if(maxChoosableInteger*(maxChoosableInteger+1)/2<desiredTotal) return 0;
+        map<int,char> mem;
+        return canWin(~0<<maxChoosableInteger, maxChoosableInteger, desiredTotal, mem);
+    }
+    bool canWin(int pool, int maxint, int tot, map<int,char>& mem) {
         if(tot<=0) return 0;
+        if(mem.find(pool) != mem.end()) 
+            return mem[pool];
         for(int i=0;i<maxint;i++) {
             int mask = 1<<i;
             if(pool & mask) continue;
             pool|=mask;
-            if(!canWin(pool,maxint, tot-i-1)) return 1;
+            if(!canWin(pool,maxint,tot-i-1,mem)) return mem[pool^=mask]=1;
             pool^=mask;
         }
-        return 0;
+        return mem[pool] = 0;
     }
 };
 
-
 int main(){
    Solution s;
-   cout<<s.canIWin(10,15)<<endl;
-   cout<<((-1)<<10)<<endl;
-   cout<<(1<<10)<<endl;
+   cout<<s.canIWin(10,11)<<endl;
+   cout<<s.canIWin(18,79)<<endl;
+   cout<<s.canIWin(10,40)<<endl;
+
+   //int num=0;
+   //cout<<(num<<=1)<<endl;
+   //cout<<((-1)<<10)<<endl;
+   cout<<(~0<<10)<<endl;
 return 0;
 }
