@@ -39,6 +39,9 @@ public class Predict_the_Winner_486 {
         int []nums1={1, 5, 233, 7};
         System.out.println(s.PredictTheWinner(nums1));
 
+        int []nums2={1,1,1};
+        System.out.println(s.PredictTheWinner(nums2));
+
     }
 
     private static class Solution {
@@ -47,15 +50,50 @@ public class Predict_the_Winner_486 {
             if(null==nums||0==nums.length){
                 return false;
             }
+            if(nums.length==1){
+                return true;
+            }
+            int []state=new int[nums.length];
+            return dfs(nums,state,0,0,0)||dfs(nums,state,nums.length-1,0,0);
+        }
+
+        public boolean dfs(int[] nums,int []state,int index,int count,int sum){
+            if(count>= nums.length&&sum<=0){
+                return false;
+            }
+            if(state[index]==1){
+                return false;
+            }
+            state[index]=1;
+            if(!dfs(nums,state,(index+1)%nums.length,count+1,0-sum+nums[index])
+                    || !dfs(nums,state,(index-1+nums.length)%nums.length,count+1,0-sum+nums[index])){
+                return true;
+            }
+            state[index]=0;
+            return false;
+        }
+
+    }
+
+    /*
+    private static class Solution {
+        private static Map<String,Boolean> map=new HashMap<String,Boolean>();
+        public boolean PredictTheWinner(int[] nums) {
+            if(null==nums||0==nums.length){
+                return false;
+            }
+            if(nums.length==1){
+                return true;
+            }
             int []state=new int[nums.length];
             return dfs(nums,state,0,0,true,0,0)||dfs(nums,state,nums.length-1,0,true,0,0);
         }
 
         public boolean dfs(int[] nums,int []state,int index,int count,boolean status,int player1,int player2){
-            if(count>=nums.length&&!status&&player1<player2){
-                return false;
-            }else if(count>=nums.length&&status&&player1>=player2){
+            if(count>=nums.length&&player1>=player2){
                 return true;
+            }else if(count>=nums.length&&player1<player2){
+                return false;
             }
 
             if(state[index]==1){
@@ -74,10 +112,9 @@ public class Predict_the_Winner_486 {
                     || dfs(nums,state,(index-1+nums.length)%nums.length,count+1,!status,player1,player2)){
                 return true;
             }
-
             state[index]=0;
             return false;
         }
 
-    }
+    }*/
 }
