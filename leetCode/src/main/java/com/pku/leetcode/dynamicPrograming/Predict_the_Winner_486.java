@@ -4,6 +4,7 @@ package com.pku.leetcode.dynamicPrograming;
  * Created by zhaolizhen on 17-8-13.
  */
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,27 @@ public class Predict_the_Winner_486 {
     }
 
     private static class Solution {
-        private static Map<String,Boolean> map=new HashMap<String,Boolean>();
+        public boolean PredictTheWinner(int[] nums) {
+            return dfs(nums,0,nums.length-1,0,0,1);
+        }
+
+        public boolean dfs(int [] nums,int start,int end,int sum1,int sum2,int status){
+            if(end==start){
+                if(status==1){
+                    return sum1+nums[start]>=sum2;
+                }else{
+                    return sum2+nums[start]>sum1;
+                }
+            }
+            if(status==1){
+                return !dfs(nums,start+1,end,sum1+nums[start],sum2,2)||!dfs(nums,start,end-1,sum1+nums[end],sum2,2);
+            }else{
+                return !dfs(nums,start+1,end,sum1,sum2+nums[start],1)||!dfs(nums,start,end-1,sum1,sum2+nums[end],1);
+            }
+        }
+    }
+    /**
+    private static class Solution {
         public boolean PredictTheWinner(int[] nums) {
             if(null==nums||0==nums.length){
                 return false;
@@ -53,68 +74,25 @@ public class Predict_the_Winner_486 {
             if(nums.length==1){
                 return true;
             }
-            int []state=new int[nums.length];
-            return dfs(nums,state,0,0,0)||dfs(nums,state,nums.length-1,0,0);
+            Integer mem[][]=new Integer[nums.length][nums.length];
+            return PredictTheWinner(nums,0,nums.length-1,mem)>=0;
         }
 
-        public boolean dfs(int[] nums,int []state,int index,int count,int sum){
-            if(count>= nums.length&&sum<=0){
-                return false;
+        public int PredictTheWinner(int[] nums,int i,int j,Integer[][]mem){
+            if(mem[i][j]!=null){
+                return mem[i][j];
             }
-            if(state[index]==1){
-                return false;
+            if(i==j){
+                return nums[i];
             }
-            state[index]=1;
-            if(!dfs(nums,state,(index+1)%nums.length,count+1,0-sum+nums[index])
-                    || !dfs(nums,state,(index-1+nums.length)%nums.length,count+1,0-sum+nums[index])){
-                return true;
-            }
-            state[index]=0;
-            return false;
+            int left=nums[i]-PredictTheWinner(nums,i+1,j,mem);
+            int right=nums[j]-PredictTheWinner(nums,i,j-1,mem);
+            System.out.println("nums[i]="+nums[i]+",nums[j]="+nums[j]+",left="+left+",right="+right);
+            mem[i][j]=Math.max(left,right);
+            return mem[i][j];
         }
 
     }
+     */
 
-    /*
-    private static class Solution {
-        private static Map<String,Boolean> map=new HashMap<String,Boolean>();
-        public boolean PredictTheWinner(int[] nums) {
-            if(null==nums||0==nums.length){
-                return false;
-            }
-            if(nums.length==1){
-                return true;
-            }
-            int []state=new int[nums.length];
-            return dfs(nums,state,0,0,true,0,0)||dfs(nums,state,nums.length-1,0,true,0,0);
-        }
-
-        public boolean dfs(int[] nums,int []state,int index,int count,boolean status,int player1,int player2){
-            if(count>=nums.length&&player1>=player2){
-                return true;
-            }else if(count>=nums.length&&player1<player2){
-                return false;
-            }
-
-            if(state[index]==1){
-                return false;
-            }
-
-            state[index]=1;
-            if(status==true){
-                player1+=nums[index];
-            }else{
-                player2+=nums[index];
-            }
-
-            System.out.println("player1="+player1+",player2="+player2+",status="+status);
-            if(dfs(nums,state,(index+1)%nums.length,count+1,!status,player1,player2)
-                    || dfs(nums,state,(index-1+nums.length)%nums.length,count+1,!status,player1,player2)){
-                return true;
-            }
-            state[index]=0;
-            return false;
-        }
-
-    }*/
 }
