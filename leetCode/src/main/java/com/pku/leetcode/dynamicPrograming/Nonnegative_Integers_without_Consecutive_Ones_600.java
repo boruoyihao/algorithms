@@ -24,8 +24,8 @@ package com.pku.leetcode.dynamicPrograming;
 public class Nonnegative_Integers_without_Consecutive_Ones_600 {
 
     public static void main(String args[]){
-        Solution s=new Solution();
-        System.out.println(s.findIntegers(1000000000));
+//        Solution s=new Solution();
+//        System.out.println(s.findIntegers(1000000000));
     }
 
 //    //brute way to solve this problem
@@ -65,7 +65,7 @@ public class Nonnegative_Integers_without_Consecutive_Ones_600 {
 
     class Solution {
         public int findIntegers(int num) {
-
+            return 0;
         }
     }
 }
