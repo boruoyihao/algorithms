@@ -12,7 +12,7 @@ public class TreeUtils {
     static TreeNode createTree() {
         TreeNode root = null;
         int value = scanner.nextInt();
-        if (value == -10) {
+        if (value == -1) {
             return root;
         }
         root = new TreeNode(value);

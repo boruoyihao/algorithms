@@ -29,6 +29,8 @@ package com.pku.leetcode.tree;
  3. -3 -> 11
  */
 
+import java.util.HashMap;
+
 /**
  * Created by zhaolizhen on 17-12-4.
  */
@@ -39,7 +41,7 @@ public class Path_Sum_III_437 {
         //-1
         TreeNode root=TreeUtils.createTree();
         Solution solution=new Solution();
-        System.out.println(solution.pathSum(root, -1));
+        System.out.println(solution.pathSum(root, 6));
     }
 
     /**
@@ -51,7 +53,7 @@ public class Path_Sum_III_437 {
      *     TreeNode(int x) { val = x; }
      * }
      */
-    private static class Solution {
+    private static class Solution1 {
 
         public int pathSum(TreeNode root, int sum) {
             return getPaths(root,sum);
@@ -69,6 +71,28 @@ public class Path_Sum_III_437 {
                 return 0;
             }
             return (sum==root.val?1:0)+getPathFromRoot(root.left, sum - root.val)+getPathFromRoot(root.right, sum - root.val);
+        }
+    }
+
+     private static class Solution{
+        public int pathSum(TreeNode root, int sum) {
+            HashMap<Integer, Integer> preSum = new HashMap();
+            preSum.put(0,1);
+            return helper(root, 0, sum, preSum);
+        }
+
+        public int helper(TreeNode root, int currSum, int target, HashMap<Integer, Integer> preSum) {
+            if (root == null) {
+                return 0;
+            }
+
+            currSum += root.val;
+            int res = preSum.getOrDefault(currSum - target, 0);
+            preSum.put(currSum, preSum.getOrDefault(currSum, 0) + 1);
+
+            res += helper(root.left, currSum, target, preSum) + helper(root.right, currSum, target, preSum);
+            preSum.put(currSum, preSum.get(currSum) - 1);
+            return res;
         }
     }
 }
