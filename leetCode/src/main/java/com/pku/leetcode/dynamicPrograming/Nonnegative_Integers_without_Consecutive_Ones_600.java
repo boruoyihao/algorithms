@@ -5,7 +5,8 @@ package com.pku.leetcode.dynamicPrograming;
  */
 
 /**
- * Given a positive integer n, find the number of non-negative integers less than or equal to n, whose binary representations do NOT contain consecutive ones.
+ * Given a positive integer n, find the number of non-negative integers less than or equal to n,
+ * whose binary representations do NOT contain consecutive ones.
 
  Example 1:
  Input: 5
@@ -63,7 +64,7 @@ public class Nonnegative_Integers_without_Consecutive_Ones_600 {
 //    }
 
 
-    class Solution {
+    private static class Solution {
         public int findIntegers(int num) {
             return 0;
         }

@@ -38,7 +38,7 @@ public class Intersection_of_Two_Arrays_349 {
                 set.add(no);
             }
 
-            Set<Integer>result=new HashSet<>(nums1.length);
+            Set<Integer>result=new HashSet<Integer>(nums1.length);
 
             for(int no:nums2){
                 if(set.contains(no)){

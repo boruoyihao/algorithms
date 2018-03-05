@@ -40,7 +40,7 @@ public class Path_SUM_II_113 {
 
     private static class Solution {
         public List<List<Integer>> pathSum(TreeNode root, int sum) {
-            List<List<Integer>> results=new ArrayList<>();
+            List<List<Integer>> results=new ArrayList<List<Integer>>();
             dfs(results,new LinkedList<Integer>(),root,sum);
             return results;
         }

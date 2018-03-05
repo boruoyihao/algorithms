@@ -93,8 +93,8 @@ public class Decode_String_394 {
     private static class Solution {
         public String decodeString(String s) {
             String res = "";
-            Stack<Integer> countStack = new Stack<>();
-            Stack<String> resStack = new Stack<>();
+            Stack<Integer> countStack = new Stack<Integer>();
+            Stack<String> resStack = new Stack<String>();
             int idx = 0;
             while (idx < s.length()) {
                 if (Character.isDigit(s.charAt(idx))) {
