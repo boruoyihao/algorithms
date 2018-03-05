@@ -18,7 +18,7 @@ package com.pku.leetcode.dynamicPrograming;
 public class Best_Time_to_Buy_and_Sell_Stock_III_123 {
 
     public static void main(String args[]){
-        int prices[]={3,9,1,9,8,7,6,5,4,3,2,1};
+        int prices[]={3,9,1,10,20};
         Solution solution=new Solution();
         System.out.println(solution.maxProfit(prices));
     }
@@ -52,10 +52,21 @@ public class Best_Time_to_Buy_and_Sell_Stock_III_123 {
 
     private static class Solution {
         public int maxProfit(int[] prices) {
-            if(prices.length<=1){
+            if (prices.length <= 1) {
                 return 0;
             }
-            return 0;
+            int buy1=Integer.MIN_VALUE;
+            int sell1=0;
+            int buy2=Integer.MIN_VALUE;
+            int sell2=0;
+            for(int price:prices){
+                sell2=Math.max(sell2,buy2+price);
+                buy2=Math.max(buy2,sell1-price);
+
+                sell1=Math.max(sell1,buy1+price);
+                buy1=Math.max(buy1,-price);
+            }
+            return sell2;
         }
     }
 }

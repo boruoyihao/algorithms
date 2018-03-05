@@ -2,6 +2,10 @@ package com.pku.leetcode.dynamicPrograming;
 
 
 /**
+ * Created by zhaolizhen on 17-12-30.
+ */
+
+/**
  * Your are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee.
 
  You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction. You may not buy more than 1 share of a stock at a time (ie. you must sell the stock share before you buy again.)
@@ -24,21 +28,14 @@ package com.pku.leetcode.dynamicPrograming;
  0 <= fee < 50000.
 
  */
-/**
- * Created by zhaolizhen on 18-1-31.
- */
+
 public class Best_Time_to_Buy_and_Sell_Stock_with_Transaction_Fee_714 {
 
     public static void main(String args[]){
-//        int array[]={1,3,2,8,4,9};
-//        Solution solution=new Solution();
-//        System.out.println(solution.maxProfit(array,2));
-        int array[]={1,3,7,5,10,3};
         Solution solution=new Solution();
-        System.out.println(solution.maxProfit(array,3));
-
+        int array[]=new int[]{1,3,2,8,10,4,9};
+        System.out.println(solution.maxProfit(array,2));
     }
-
 
     private static class Solution {
         public int maxProfit(int[] prices, int fee) {
