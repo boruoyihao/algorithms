@@ -1,6 +1,7 @@
 package com.pku.leetcode.array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,8 +36,30 @@ public class Find_All_Numbers_Disappeared_in_an_Array_448 {
 
 
     private static class Solution {
+
+        public List<Integer> findDisappearedNumbers2(int[] nums) {
+            List<Integer>result=new ArrayList<Integer>();
+            if(null==nums||nums.length<=1){
+                return result;
+            }
+
+            for(int i=0;i<nums.length;i++){
+                int index=nums[i];
+                if(nums[Math.abs(index)-1]>0){
+                    nums[Math.abs(index)-1]=-nums[Math.abs(index)-1];
+                }
+            }
+
+            System.out.println(Arrays.toString(nums));
+            for(int i=0;i<nums.length;i++){
+                if(nums[i]>0){
+                    result.add(i+1);
+                }
+            }
+            return result;
+        }
         public List<Integer> findDisappearedNumbers(int[] nums) {
-            List<Integer>result=new ArrayList<>();
+            List<Integer>result=new ArrayList<Integer>();
             if(null==nums||0==nums.length){
                 return result;
             }
@@ -49,6 +72,7 @@ public class Find_All_Numbers_Disappeared_in_an_Array_448 {
                     next=temp;
                 }
             }
+//            System.out.println(Arrays.toString(nums));
 
             for(int i=0;i<nums.length;i++){
                 if(i+1!=nums[i]){
