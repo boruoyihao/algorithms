@@ -47,7 +47,7 @@ public class Find_All_Anagrams_in_a_String_438 {
         System.out.println(solution.findAnagrams("cbaebabacd","abc"));
         System.out.println(solution.findAnagrams("abaa","aab"));
 
-
+        System.out.println(solution.findAnagrams("abaca","aab"));
     }
 
     private static class Solution {
@@ -75,6 +75,21 @@ public class Find_All_Anagrams_in_a_String_438 {
                     result.add(i);
                 }
             }
+            return result;
+        }
+    }
+
+    private static class Solution1 {
+        public List<Integer> findAnagrams(String s, String p) {
+            List<Integer> result=new ArrayList<Integer>();
+            if(p.length()>s.length()){
+                return result;
+            }
+            int letters[]=new int[26];
+            for(int i=0;i<p.length();i++){
+                letters[p.charAt(i)-'a']++;
+            }
+
             return result;
         }
     }
