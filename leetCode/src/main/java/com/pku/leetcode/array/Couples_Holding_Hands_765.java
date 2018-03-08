@@ -63,7 +63,7 @@ public class Couples_Holding_Hands_765 {
 
                 int targetCouple=((row[i]&0x1)==1)?row[i]-1:row[i]+1;
                 swap(row,i+1,mem[targetCouple]);//swap data
-                swap(mem,row[i+1],row[mem[targetCouple]]); //update mem array
+                swap(mem, row[i + 1], row[mem[targetCouple]]); //update mem array
                 result++;
             }
 
