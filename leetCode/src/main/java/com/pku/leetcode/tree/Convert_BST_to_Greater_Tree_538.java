@@ -35,7 +35,7 @@ public class Convert_BST_to_Greater_Tree_538 {
     private static class Solution1 {
         private int index=0;
         public TreeNode convertBST(TreeNode root) {
-            List<Integer> list=new ArrayList<>();
+            List<Integer> list=new ArrayList<Integer>();
             travel(root,list);
             int array[]=updateValue(list);
             convert(root, array);
