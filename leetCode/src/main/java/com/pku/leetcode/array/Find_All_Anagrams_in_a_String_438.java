@@ -43,14 +43,14 @@ public class Find_All_Anagrams_in_a_String_438 {
 
     public static void main(String args[]){
         Solution solution=new Solution();
-        System.out.println(solution.findAnagrams("abab","ab"));
+//        System.out.println(solution.findAnagrams("abab","ab"));
         System.out.println(solution.findAnagrams("cbaebabacd","abc"));
-        System.out.println(solution.findAnagrams("abaa","aab"));
-
-        System.out.println(solution.findAnagrams("abaca","aab"));
+//        System.out.println(solution.findAnagrams("abaa","aab"));
+//
+//        System.out.println(solution.findAnagrams("abaca","aab"));
     }
 
-    private static class Solution {
+    private static class Solution1 {
         public List<Integer> findAnagrams(String s, String p) {
             List<Integer> result=new ArrayList<Integer>();
             if(p.length()>s.length()){
@@ -79,10 +79,12 @@ public class Find_All_Anagrams_in_a_String_438 {
         }
     }
 
-    private static class Solution1 {
+
+    //slide window to solve this problem
+    private static class Solution {
         public List<Integer> findAnagrams(String s, String p) {
             List<Integer> result=new ArrayList<Integer>();
-            if(p.length()>s.length()){
+            if(null==s||null==p||p.length()>s.length()){
                 return result;
             }
             int letters[]=new int[26];
@@ -90,6 +92,41 @@ public class Find_All_Anagrams_in_a_String_438 {
                 letters[p.charAt(i)-'a']++;
             }
 
+            //build the init window
+            int start=0,end=0,slideWindowDiff=p.length();
+            for(;end<p.length();end++){
+                letters[s.charAt(end)-'a']--;
+                if(letters[s.charAt(end)-'a']>=0){
+                    slideWindowDiff--;
+                }
+            }
+
+            if(0==slideWindowDiff){
+                result.add(0);
+            }
+
+            for(;end<s.length();){
+                if(letters[s.charAt(start)-'a']>=0){
+                    slideWindowDiff++;
+                }
+
+                letters[s.charAt(start)-'a']++;
+
+                start++;
+
+                letters[s.charAt(end)-'a']--;
+
+                if(letters[s.charAt(end)-'a']>=0){
+                    slideWindowDiff--;
+                }
+
+                end++;
+
+                if(0==slideWindowDiff){
+                    result.add(start);
+                }
+
+            }
             return result;
         }
     }
