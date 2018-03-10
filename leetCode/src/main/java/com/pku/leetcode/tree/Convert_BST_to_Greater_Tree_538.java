@@ -31,7 +31,8 @@ public class Convert_BST_to_Greater_Tree_538 {
         TreeUtils.printTree(result);
     }
 
-    private static class Solution {
+    //ugly way
+    private static class Solution1 {
         private int index=0;
         public TreeNode convertBST(TreeNode root) {
             List<Integer> list=new ArrayList<>();
@@ -71,4 +72,22 @@ public class Convert_BST_to_Greater_Tree_538 {
             convert(root.right, array);
         }
     }
+
+    //brillant way to solvue this problem
+    //https://leetcode.com/problems/convert-bst-to-greater-tree/description/
+    private static class Solution {
+        private int cur_sum = 0;
+
+        public void travel(TreeNode root){
+            if (root==null) return;
+            if (root.right!=null) travel(root.right);
+
+            root.val = (cur_sum += root.val);
+            if (root.left!=null) travel(root.left);
+        }
+        public TreeNode convertBST(TreeNode root) {
+            travel(root);
+            return root;
+        }
+    };
 }
