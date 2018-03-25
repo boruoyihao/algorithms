@@ -47,6 +47,8 @@ public class Task_Scheduler_621 {
             for(int i=0;i<tasks.length;i++){
                 
             }
+
+            return 0;
         }
     }
 }
