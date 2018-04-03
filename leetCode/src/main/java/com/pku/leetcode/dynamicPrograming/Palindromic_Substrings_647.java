@@ -61,7 +61,7 @@ public class Palindromic_Substrings_647 {
         }
     }
 
-    private static class Solution {
+    private static class Solution2 {
         int result=0;
 
         public int countSubstrings(String s) {
@@ -83,5 +83,54 @@ public class Palindromic_Substrings_647 {
                 right++;
             }
         }
+    }
+
+    //manacher Algorithm
+    private static class Solution {
+        int result=0;
+
+        public int countSubstrings(String s) {
+            if(null==s||0==s.length()){
+                return 0;
+            }
+
+            char []newArray=new char[s.length()*2+2];
+            int j=0;
+            newArray[j++]='$';
+            newArray[j++]='#';
+            for(int i=0;i<s.length();i++){
+                newArray[j++]=s.charAt(i);
+                newArray[j++]='#';
+            }
+
+            int p[]=new int[newArray.length];
+            int id=0;
+            int mx=0;
+            for(int i=1;i<newArray.length;i++){
+                if(i<mx){
+                    p[i]=Math.min(p[2*id-i],mx-i);
+                }else{
+                    p[i]=1;
+                }
+
+                while(i+p[i]<newArray.length&&(i-p[i]>0)&&newArray[i+p[i]]==newArray[i-p[i]]){
+                    p[i]++;
+                }
+
+                if(mx<i+p[i]){
+                    id=i;
+                    mx=i+p[i];
+                }
+            }
+
+            int sum=0;
+            for(int i=0;i<p.length;i=i+1){
+//                System.out.print(p[i]+" ");
+                sum+=(p[i])/2;
+            }
+//            System.out.println();
+            return sum;
+        }
+
     }
 }
