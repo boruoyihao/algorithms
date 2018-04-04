@@ -20,6 +20,7 @@ package com.pku.leetcode.dynamicPrograming;
  Note:
  The input string length won't exceed 1000.
  */
+
 public class Palindromic_Substrings_647 {
 
     public static void main(String args[]){
@@ -27,6 +28,8 @@ public class Palindromic_Substrings_647 {
         System.out.println(new Solution().countSubstrings("abc"));
         System.out.println(new Solution().countSubstrings("aac"));
         System.out.println(new Solution().countSubstrings("aaa"));
+        System.out.println(new Solution().countSubstrings("abcba"));
+
 
 
 
@@ -86,6 +89,7 @@ public class Palindromic_Substrings_647 {
     }
 
     //manacher Algorithm
+    //https://leetcode.com/problems/palindromic-substrings/solution/
     private static class Solution {
         int result=0;
 
