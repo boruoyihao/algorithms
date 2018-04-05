@@ -25,8 +25,8 @@ package com.pku.leetcode.dynamicPrograming;
  */
 public class Longest_Palindromic_Subsequence_516 {
 
-    public static void main(String args[]){
-        Solution solution=new Solution();
+    public static void main(String args[]) {
+        Solution solution = new Solution();
         System.out.println(solution.longestPalindromeSubseq("abc"));
         System.out.println(solution.longestPalindromeSubseq("a"));
         System.out.println(solution.longestPalindromeSubseq("abac"));
@@ -35,35 +35,96 @@ public class Longest_Palindromic_Subsequence_516 {
         System.out.println(solution.longestPalindromeSubseq("dabba"));
         System.out.println(solution.longestPalindromeSubseq("abbad"));
         System.out.println(solution.longestPalindromeSubseq("cbbd"));
+        System.out.println(solution.longestPalindromeSubseq("bbbab"));
     }
 
-    private static class Solution {
+    //DP Solution
+    //https://leetcode.com/problems/longest-palindromic-subsequence/discuss/99154/short-java-solutionbeats-99with-explanation
+    private static class Solution1 {
         public int longestPalindromeSubseq(String s) {
-            if(null==s||s.length()==0){
+            if (null == s || s.length() == 0) {
                 return 0;
             }
 
-            int max=0;
-            for(int i=0;i<s.length();i++){
-                int value=getlongestRadius(s,i,i);
-                if(max<value*2-1){
-                    max=value*2-1;
-                }
 
-                value=getlongestRadius(s,i,i+1);
-                if(max<value*2){
-                    max=value*2;
-                }
+            int[][] mem = new int[s.length()][s.length()];
+            for (int i = 0; i < s.length(); i++) {
+                mem[i][i] = 1;
             }
-            return max;
+
+            return helper(mem, 0, s.length() - 1, s);
+
         }
 
-        public int getlongestRadius(String s,int left,int right){
-            int j=0;
-            while(right+j<s.length()&&left-j>=0&&s.charAt(right+j)==s.charAt(left-j)){
-                j++;
+        public int helper(int[][] mem, int i, int j, String s) {
+            if (i > j || mem[i][j] != 0) {
+                return mem[i][j];
             }
-            return j;
+
+            if (s.charAt(i) == s.charAt(j)) {
+                mem[i][j] = helper(mem, i + 1, j - 1, s) + 2;
+            } else {
+                mem[i][j] = Math.max(helper(mem, i + 1, j, s), helper(mem, i, j - 1, s));
+            }
+            return mem[i][j];
+        }
+
+
+    }
+
+    //https://leetcode.com/problems/longest-palindromic-subsequence/discuss/99101/Straight-forward-Java-DP-solution
+    private static class Solution {
+        public int longestPalindromeSubseq(String s) {
+            int[][] dp = new int[s.length()][s.length()];
+
+            for (int i = s.length() - 1; i >= 0; i--) {
+                dp[i][i] = 1;
+                for (int j = i + 1; j < s.length(); j++) {
+                    if (s.charAt(i) == s.charAt(j)) {
+                        dp[i][j] = dp[i + 1][j - 1] + 2;
+                    } else {
+                        dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+
+            System.out.println("result");
+            for(int i=0;i<dp.length;i++){
+                for(int j=0;j<dp[0].length;j++){
+                    System.out.print(dp[i][j]+" ");
+                }
+                System.out.println();
+            }
+            return dp[0][s.length() - 1];
+        }
+    }
+
+    //longest common subsequence
+    //https://leetcode.com/problems/longest-palindromic-subsequence/discuss/99151/Super-simple-solution-using-reversed-string
+    private static class Solution2 {
+        public int longestPalindromeSubseq(String s) {
+            if (s == null || s.isEmpty()) return 0;
+            int len = s.length();
+            int[][] dp = new int[len + 1][len + 1];
+            String t = new StringBuilder(s).reverse().toString();
+            for (int i = len - 1; i >= 0; i--) {
+                for (int j = len - 1; j >= 0; j--) {
+                    if (s.charAt(i) == t.charAt(j)) {
+                        dp[i][j] = 1 + dp[i + 1][j + 1];
+                    } else {
+                        dp[i][j] = Math.max(dp[i + 1][j], dp[i][j + 1]);
+                    }
+                }
+            }
+
+//            System.out.println("result");
+//            for(int i=0;i<dp.length;i++){
+//                for(int j=0;j<dp[0].length;j++){
+//                    System.out.print(dp[i][j]+" ");
+//                }
+//                System.out.println();
+//            }
+            return dp[0][0];
         }
     }
 }
