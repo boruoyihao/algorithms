@@ -31,8 +31,8 @@ import java.util.*;
 public class Longest_Word_in_Dictionary_720 {
 
     public static void main(String args[]){
-//        String words[]={"a", "banana", "app", "appl", "ap", "apply", "apple"};
-        String words[]={"a", "a", "a", "a", "a", "a", "a"};
+        String words[]={"a", "banana", "app", "appl", "ap", "apply", "apple"};
+//        String words[]={"a", "a", "a", "a", "a", "a", "a"};
 
         Solution solution=new Solution();
         System.out.println(solution.longestWord(words));
@@ -54,22 +54,26 @@ public class Longest_Word_in_Dictionary_720 {
             for(String word:words){
                 List<String>path=new ArrayList<>();
                 String temp=word;
+                boolean flag=true;
                 while(temp.length()>0){
                     if(mem.containsKey(temp)){
                         if(mem.get(temp)==0) {
                             temp = word.substring(0, temp.length() - 1);
                             path.add(temp);
                         }else if(mem.get(temp)==1){
+                            flag=false;
                             break;
                         }else{
                             path.add(temp);
                             break;
                         }
                     }else{
+                        flag=false;
                         break;
                     }
                 }
-                if(temp.length()==0){
+
+                if(flag){
                     for(String filter:path){
                         mem.put(filter,2);
                     }
