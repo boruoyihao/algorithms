@@ -4,6 +4,9 @@ package com.pku.leetcode.string;
  * Created by zhaolizhen on 18-4-13.
  */
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Given a list of strings, you need to find the longest uncommon subsequence among them. The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.
 
@@ -26,9 +29,14 @@ public class Longest_Uncommon_Subsequence_II_522 {
         String str1[]=new String[]{"ab", "cdc", "eae"};
         String str2[]={"aaa","aaa","aaa"};
         String str3[]={"aabbcc", "aabbcc","cb"};
+        String str4[]={"aabbcc", "aabbcc","c","e","aabbcd"};
         System.out.println(solution.findLUSlength(str1));
         System.out.println(solution.findLUSlength(str2));
         System.out.println(solution.findLUSlength(str3));
+        System.out.println(solution.findLUSlength(str4));
+
+
+
 
     }
 
@@ -38,16 +46,38 @@ public class Longest_Uncommon_Subsequence_II_522 {
                 return -1;
             }
 
-            int max=-1;
-
-            for(int i=1;i<strs.length;i++){
-                if(strs[i-1].equals(strs[i])){
-                    return -1;
+            Arrays.sort(strs, new Comparator<String>() {
+                public int compare(String a, String b) {
+                    return a.length() != b.length() ? a.length() - b.length() : a.compareTo(b);
                 }
-                int temp=Math.max(strs[i-1].length(),strs[i].length());
-                max=Math.max(max,temp);
+            });
+
+
+            for(int i = strs.length - 1; i >= 0; i--) {
+                if(i > 0 && !strs[i].equals(strs[i - 1]) || i == 0) {
+                    int j = i+1;
+                    for(; j < strs.length; j++)
+                        if(isSubsequence(strs[i], strs[j]))
+                            break;
+                    if(j == strs.length)
+                        return strs[i].length();
+                }
             }
-            return max;
+
+            return -1;
+        }
+
+        private boolean isSubsequence(String s,String t){
+            if(s.equals(t)){
+                return true;
+            }
+            int p=0;
+            for(int i=0;i<t.length()&&p<s.length();i++){
+                if(s.charAt(p)==t.charAt(i)){
+                    p++;
+                }
+            }
+            return p==s.length();
         }
     }
 }
