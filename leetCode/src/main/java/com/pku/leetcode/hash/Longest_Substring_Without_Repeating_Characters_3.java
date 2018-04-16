@@ -63,7 +63,7 @@ public class Longest_Substring_Without_Repeating_Characters_3 {
     public class Solution2 {
         public int lengthOfLongestSubstring(String s) {
             int n = s.length(), ans = 0;
-            Map<Character, Integer> map = new HashMap<>(); // current index of character
+            Map<Character, Integer> map = new HashMap<Character,Integer>(); // current index of character
             // try to extend the range [i, j]
             for (int j = 0, i = 0; j < n; j++) {
                 if (map.containsKey(s.charAt(j))) {

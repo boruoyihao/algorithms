@@ -52,7 +52,7 @@ public class Longest_Word_in_Dictionary_720 {
 
             String max="";
             for(String word:words){
-                List<String>path=new ArrayList<>();
+                List<String>path=new ArrayList<String>();
                 String temp=word;
                 boolean flag=true;
                 while(temp.length()>0){

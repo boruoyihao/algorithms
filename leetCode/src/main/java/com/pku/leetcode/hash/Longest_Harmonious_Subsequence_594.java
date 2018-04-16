@@ -89,7 +89,7 @@ public class Longest_Harmonious_Subsequence_594 {
 
     private static class Solution {
         public int findLHS(int[] nums) {
-            HashMap < Integer, Integer > map = new HashMap < > ();
+            HashMap < Integer, Integer > map = new HashMap < Integer,Integer> ();
             int res = 0;
             for (int num: nums) {
                 map.put(num, map.getOrDefault(num, 0) + 1);
