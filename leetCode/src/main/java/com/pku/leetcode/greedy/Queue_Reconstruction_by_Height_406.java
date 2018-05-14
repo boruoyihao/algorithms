@@ -4,8 +4,10 @@ package com.pku.leetcode.greedy;
  * Created by zhaolizhen on 18-4-23.
  */
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.
@@ -29,6 +31,7 @@ public class Queue_Reconstruction_by_Height_406 {
         Solution solution=new Solution();
         int [][]result=solution.reconstructQueue(people);
         print(result);
+
     }
 
     public static void print(int [][]people){
@@ -41,7 +44,7 @@ public class Queue_Reconstruction_by_Height_406 {
         }
     }
 
-    private static class Solution {
+    private static class Solution1 {
         public int[][] reconstructQueue(int[][] people) {
             if(null==people||people.length<=1){
                 return people;
@@ -56,8 +59,6 @@ public class Queue_Reconstruction_by_Height_406 {
                     return o1[0]-o2[0];
                 }
             });
-
-//            print(people);
 
 
             for(int i=1;i<people.length;i++){
@@ -81,6 +82,42 @@ public class Queue_Reconstruction_by_Height_406 {
                 }
             }
             return people;
+        }
+    }
+
+
+    private static class Solution2 {
+        public int[][] reconstructQueue(int[][] people) {
+            Arrays.sort(people, new Comparator<int[]>() {
+                public int compare(int[] person1, int[] person2) {
+                    return (person1[0] == person2[0]) ? person1[1] - person2[1] : person2[0] - person1[0];
+                }
+            });
+
+            print(people);
+            List<int[]> list = new ArrayList<int[]>();
+            for (int[] cur : people) {
+                list.add(cur[1], cur);
+            }
+            return list.toArray(new int[people.length][2]);
+        }
+    }
+
+
+    private static class Solution {
+        public int[][] reconstructQueue(int[][] people) {
+            Arrays.sort(people, new Comparator<int[]>() {
+                public int compare(int[] person1, int[] person2) {
+                    return (person1[0] == person2[0]) ? person1[1] - person2[1] : person2[0] - person1[0];
+                }
+            });
+
+            print(people);
+            List<int[]> list = new ArrayList<int[]>();
+            for (int[] cur : people) {
+                list.add(cur[1], cur);
+            }
+            return list.toArray(new int[people.length][2]);
         }
     }
 }
