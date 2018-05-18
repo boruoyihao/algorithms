@@ -112,7 +112,6 @@ public class Queue_Reconstruction_by_Height_406 {
                 }
             });
 
-            print(people);
             List<int[]> list = new ArrayList<int[]>();
             for (int[] cur : people) {
                 list.add(cur[1], cur);
