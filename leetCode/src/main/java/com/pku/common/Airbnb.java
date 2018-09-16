@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class Airbnb {
 
-    public static void main0(String args[]){
+    public static void main(String args[]){
         Scanner scanner=new Scanner(System.in);
         int count=scanner.nextInt();
         String[]input=new String[count];
@@ -40,14 +40,68 @@ public class Airbnb {
         System.out.println(Arrays.toString(result));
     }
 
-    public static void main(String args[]){
-        System.out.println(Practice5.consecutive(21));
+    public static void main3(String args[]){
+        System.out.println(Practice5.consecutive(10));
     }
 
     private static class Practice1{
         static String[] doesCircleExist(String[] commands) {
-            return new String[0];
+            String[]result=new String[commands.length];
+            for(int i=0;i<commands.length;i++){
+                if(doesCirccleExist(commands[i])){
+                    result[i]="YES";
+                }else{
+                    result[i]="NO";
+                }
+            }
+            return result;
+        }
 
+        static boolean doesCirccleExist(String command){
+            int x=0,y=0;
+            int x1=1,y1=0;
+            int count=4;
+            while((count--)>0) {
+                for (int i = 0; i < command.length(); i++) {
+                    if (command.charAt(i) == 'G') {
+                        x = x + x1;
+                        y = y + y1;
+                    } else if (command.charAt(i) == 'R') {
+                        if (x1 == 1) {
+                            x1 = 0;
+                            y1 = -1;
+                        } else if (x1 == -1) {
+                            x1 = 0;
+                            y1 = 1;
+                        } else if (y1 == 1) {
+                            x1 = 1;
+                            y1 = 0;
+                        } else {
+                            x1 = -1;
+                            y1 = 0;
+                        }
+                    } else {
+                        if (x1 == 1) {
+                            x1 = 0;
+                            y1 = 1;
+                        } else if (x1 == -1) {
+                            x1 = 0;
+                            y1 = -1;
+                        } else if (y1 == 1) {
+                            x1 = -1;
+                            y1 = 0;
+                        } else {
+                            x1 = 1;
+                            y1 = 0;
+                        }
+                    }
+                }
+            }
+            if(x==0&&y==0){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 
@@ -171,10 +225,11 @@ public class Airbnb {
             long length=((num+1)>>1);
             int result=0;
 
-            int i=1,j=2;
-            int sum=i;
+            long i=1,j=2;
+            long sum=i;
             while(i<j&&j<=(length+1)){
                 if(sum==num){
+//                    System.out.println("i="+i+",j="+j);
                     result++;
                     sum+=(j++);
                     sum-=(i++);
