@@ -6,9 +6,9 @@ import java.util.Arrays;
  * Created by zhaolizhen on 18-9-16.
  */
 public class AirBnb2 {
-    public static void main0(String args[]){
+    public static void main(String args[]){
         Practice1 practice1=new Practice1();
-        System.out.println(practice1.maxStep(3,3));
+        System.out.println(practice1.maxStep(2,1));
     }
 
     public static void main1(String args[]){
@@ -23,8 +23,14 @@ public class AirBnb2 {
         static int maxStep(int n, int k) {
 
             int result=0;
-            for(int i=0;i<n;i++){
-
+            int i=1;
+            while(i<=n){
+                if(result+i!=k){
+                    result+=i;
+                }else{
+                    result=result+i-1;
+                }
+                i++;
             }
             return result;
 
@@ -63,8 +69,8 @@ public class AirBnb2 {
 
     private static class Practice3{
 
-        public static void main(String args[]){
-            int [][]array=new int[][]{{1,0,1,1},{1,1,1,1},{1,1,1,1}};
+        public static void main3(String args[]){
+            int [][]array=new int[][]{{1,1},{0,1}};
             System.out.println(numberOfPaths(array));
         }
 
