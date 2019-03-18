@@ -48,7 +48,7 @@ public class Non_negative_Integers_without_Consecutive_Ones_600 {
             int mem[]=new int[value*2];
 
             mem[0]=0;
-            Queue<Node> queue=new ArrayDeque<>(value*2);
+            Queue<Node> queue=new ArrayDeque<Node>(value*2);
             queue.add(new Node(0,0));
             while(!queue.isEmpty()){
                 Node previous=queue.poll();
